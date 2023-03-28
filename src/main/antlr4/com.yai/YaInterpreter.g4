@@ -3,24 +3,18 @@ grammar YaInterpreter;
 /* PARSER */
 statement
 	:	(VAR variable ASSIGNMENT expression SEMI)+
+	|   (VAR variable ASSIGNMENT sequence SEMI)+
 	;
 
-variable
-	:	VARIABLE
-	;
-
-expression
-	:	product (addOperation product)*
-	;
-
+sequence    : '{' NUMBER ( ',' NUMBER)* '}' ;
+variable    :	VARIABLE ;
+expression  :	product (addOperation product)* ;
 addOperation
 	:	ADD
 	|	SUBTRACT
 	;
 
-product
-	:	term (productOperation term)*
-	;
+product : term (productOperation term)* ;
 
 productOperation
 	:	MULTIPLY
@@ -34,58 +28,23 @@ term
 	;
 
 /* LEXER */
-SEMI
-	:	';'
-	;
+SEMI            :	';' ;
+LPAREN          :	'(' ;
+RPAREN          :	')' ;
+ADD             :	'+' ;
+SUBTRACT        :	'-' ;
+MULTIPLY        :	'*' ;
+DIVIDE          :	'/' ;
+ASSIGNMENT      :	'=' ;
 
-LPAREN
-	:	'('
-	;
+VAR             : 'var' ;
+STRING          : ["] ( ~["\r\n\\] | '\\' ~[\r\n] )* ["]
+                | ['] ( ~['\r\n\\] | '\\' ~[\r\n] )* [']
+                ;
 
-RPAREN
-	:	')'
-	;
+VARIABLE        : ALPHA ( ALPHA )* ;
 
-ADD
-	:	'+'
-	;
+NUMBER          :	('0' .. '9') + ('.' ('0' .. '9') +)? ;
 
-SUBTRACT
-	:	'-'
-	;
-
-MULTIPLY
-	:	'*'
-	;
-
-DIVIDE
-	:	'/'
-	;
-
-ASSIGNMENT
-	:	'='
-	;
-
-NUMBER
-	:	('0' .. '9') + ('.' ('0' .. '9') +)?
-	;
-
-VAR
-    : 'var'
-    ;
-
-VARIABLE
-    : ALPHA ( ALPHA | NUMBER )*
-    ;
-
-DIGIT
-    : [0-9]
-    ;
-
-ALPHA
-    : [a-zA-Z_]+
-    ;
-
-WS
-    :	[ \r\n\t] + -> skip
-    ;
+ALPHA           : [a-zA-Z_]+ ;
+WS              : [ \t\r\n]+ -> skip ;
