@@ -4,8 +4,10 @@ grammar YaInterpreter;
 statement
 	:	(VAR variable ASSIGNMENT expression SEMI)+
 	|   (VAR variable ASSIGNMENT sequence SEMI)+
+	|   (VAR variable ASSIGNMENT map SEMI)+
 	;
 
+map         : 'map(' sequence ',' args=VARIABLE+ '->' body=expression ')' ;
 sequence    : '{' NUMBER ( ',' NUMBER)* '}' ;
 variable    :	VARIABLE ;
 expression  :	product (addOperation product)* ;

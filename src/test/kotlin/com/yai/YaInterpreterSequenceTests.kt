@@ -27,4 +27,11 @@ internal class YaInterpreterSequenceTests {
             YaInterpreter().evaluate("var a = {1.0, 5.0};")
         }
     }
+
+    @Test
+    fun mapFunctionTest() {
+        val sequence = YaInterpreter().evaluate("var a = map({0, 5}, i -> i * 2);")["a"]?.asSequence()
+        val expected = listOf(0, 2, 4, 6, 8, 10)
+        assertEquals(expected, sequence)
+    }
 }

@@ -1,21 +1,25 @@
 package com.yai.evaluator;
 
 import com.yai.YaInterpreterBaseVisitor;
-import com.yai.YaInterpreterLexer;
 import com.yai.YaInterpreterParser;
 import com.yai.model.Value;
+import com.yai.util.LexerHandler;
 import org.antlr.v4.runtime.tree.ParseTree;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
 
 public class ExpressionEvaluator extends YaInterpreterBaseVisitor<Void> {
-    private final YaInterpreterLexer lexer;
-    private final Map<String, Value> variables;
-    private final Stack<Double> terms = new Stack<>();
+    protected Map<String, Value> variables;
+    protected final Stack<Double> terms = new Stack<>();
 
-    public ExpressionEvaluator(YaInterpreterLexer lexer, Map<String, Value> variables, ParseTree tree) {
-        this.lexer = lexer;
+    public ExpressionEvaluator() {
+        this.variables = new HashMap<>();
+    }
+
+
+    public ExpressionEvaluator(Map<String, Value> variables, ParseTree tree) {
         this.variables = variables;
         visit(tree);
     }
@@ -46,7 +50,7 @@ public class ExpressionEvaluator extends YaInterpreterBaseVisitor<Void> {
 
     @Override
     public Void visitTerm(YaInterpreterParser.TermContext ctx) {
-        String type = this.lexer.getVocabulary().getSymbolicName(ctx.getStart().getType());
+        String type = LexerHandler.lexer.getVocabulary().getSymbolicName(ctx.getStart().getType());
         if ("NUMBER".equals(type)) {
             terms.push(Double.parseDouble(ctx.getText()));
         } else if ("VARIABLE".equals(type)) {
