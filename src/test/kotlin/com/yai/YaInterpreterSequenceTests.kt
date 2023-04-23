@@ -34,4 +34,11 @@ internal class YaInterpreterSequenceTests {
         val expected = listOf(0, 2, 4, 6, 8, 10)
         assertEquals(expected, sequence)
     }
+
+
+    @Test
+    fun reduceFunctionTest() {
+        val result = YaInterpreter().evaluate("var a = reduce({5, 7}, 1, x y -> x * y);")["a"]?.asInteger()
+        assertEquals(210, result)
+    }
 }

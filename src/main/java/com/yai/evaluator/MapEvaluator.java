@@ -2,7 +2,6 @@ package com.yai.evaluator;
 
 import com.yai.YaInterpreterBaseVisitor;
 import com.yai.YaInterpreterParser;
-import com.yai.exception.SequenceEvaluatorException;
 import com.yai.sequence.Sequence;
 import org.antlr.v4.runtime.tree.ParseTree;
 

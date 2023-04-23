@@ -5,8 +5,10 @@ statement
 	:	(VAR variable ASSIGNMENT expression SEMI)+
 	|   (VAR variable ASSIGNMENT sequence SEMI)+
 	|   (VAR variable ASSIGNMENT map SEMI)+
+	|   (VAR variable ASSIGNMENT reduce SEMI)+
 	;
 
+reduce      : 'reduce(' sequence ',' NUMBER ',' arg1=VARIABLE+ arg2=VARIABLE+ '->' body=expression ')' ;
 map         : 'map(' sequence ',' args=VARIABLE+ '->' body=expression ')' ;
 sequence    : '{' NUMBER ( ',' NUMBER)* '}' ;
 variable    :	VARIABLE ;

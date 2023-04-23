@@ -42,6 +42,12 @@ public class StatementEvaluator extends YaInterpreterBaseVisitor<Map<String, Val
             List<Integer> sequence = new MapEvaluator(ctx.map(i)).getSequence();
             variables.put(currentVariable, new Value(sequence));
         }
+
+        for (int i = 0; i < ctx.reduce().size(); i++) {
+            visit(ctx.variable(i));
+            double result = new ReduceEvaluator(ctx.reduce(i)).getResult();
+            variables.put(currentVariable, new Value(result));
+        }
         return variables;
     }
 

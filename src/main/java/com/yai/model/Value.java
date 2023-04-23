@@ -27,6 +27,10 @@ public class Value implements Comparable<Value> {
         return (Boolean)value;
     }
 
+    public Integer asInteger() {
+        return ((Number)value).intValue();
+    }
+
     public Double asDouble() {
         return ((Number)value).doubleValue();
     }
