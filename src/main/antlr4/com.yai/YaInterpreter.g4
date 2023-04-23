@@ -6,11 +6,16 @@ statement
 	|   (VAR variable ASSIGNMENT sequence SEMI)+
 	|   (VAR variable ASSIGNMENT map SEMI)+
 	|   (VAR variable ASSIGNMENT reduce SEMI)+
+	|   print
+	|   out
 	;
 
-reduce      : 'reduce(' sequence ',' NUMBER ',' arg1=VARIABLE+ arg2=VARIABLE+ '->' body=expression ')' ;
-map         : 'map(' sequence ',' args=VARIABLE+ '->' body=expression ')' ;
-sequence    : '{' NUMBER ( ',' NUMBER)* '}' ;
+out         :   OUT expression  ;
+print       :   PRINT STRING ;
+
+reduce      :   'reduce(' sequence ',' NUMBER ',' arg1=VARIABLE+ arg2=VARIABLE+ '->' body=expression ')' ;
+map         :   'map(' sequence ',' args=VARIABLE+ '->' body=expression ')' ;
+sequence    :   '{' NUMBER ( ',' NUMBER)* '}' ;
 variable    :	VARIABLE ;
 expression  :	product (addOperation product)* ;
 addOperation
@@ -32,18 +37,19 @@ term
 	;
 
 /* LEXER */
-SEMI            :	';' ;
-LPAREN          :	'(' ;
-RPAREN          :	')' ;
-ADD             :	'+' ;
-SUBTRACT        :	'-' ;
-MULTIPLY        :	'*' ;
-DIVIDE          :	'/' ;
-ASSIGNMENT      :	'=' ;
+OUT             :   'out'   ;
+PRINT           :   'print' ;
+SEMI            :	';'     ;
+LPAREN          :	'('     ;
+RPAREN          :	')'     ;
+ADD             :	'+'     ;
+SUBTRACT        :	'-'     ;
+MULTIPLY        :	'*'     ;
+DIVIDE          :	'/'     ;
+ASSIGNMENT      :	'='     ;
 
 VAR             : 'var' ;
 STRING          : ["] ( ~["\r\n\\] | '\\' ~[\r\n] )* ["]
-                | ['] ( ~['\r\n\\] | '\\' ~[\r\n] )* [']
                 ;
 
 VARIABLE        : ALPHA ( ALPHA )* ;

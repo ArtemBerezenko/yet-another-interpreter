@@ -18,7 +18,7 @@ public class YaInterpreter {
 		YaInterpreterParser parser = new YaInterpreterParser(tokens);
 		parser.setErrorHandler(new BailErrorStrategy());
 		ParseTree tree = parser.statement();
-        System.out.println(tree.toStringTree(parser));
+//        System.out.println(tree.toStringTree(parser));
 		return new StatementEvaluator(lexer, tree).getVariables();
 	}
 }

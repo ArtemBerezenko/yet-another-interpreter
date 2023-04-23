@@ -26,6 +26,16 @@ public class StatementEvaluator extends YaInterpreterBaseVisitor<Map<String, Val
 
     @Override
     public Map<String, Value> visitStatement(YaInterpreterParser.StatementContext ctx) {
+        if (ctx.print() != null) {
+            PrintEvaluator printEvaluator = new PrintEvaluator(ctx.print());
+            printEvaluator.println();
+        }
+
+        if (ctx.out() != null) {
+            PrintEvaluator printEvaluator = new PrintEvaluator(ctx.out());
+            printEvaluator.print();
+        }
+
         for (int i = 0; i < ctx.expression().size(); i++) {
             visit(ctx.variable(i));
             double result = new ExpressionEvaluator(variables, ctx.expression(i)).getResult();
