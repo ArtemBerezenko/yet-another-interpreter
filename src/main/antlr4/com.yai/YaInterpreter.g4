@@ -2,10 +2,10 @@ grammar YaInterpreter;
 
 /* PARSER */
 statement
-	:	(VAR variable ASSIGNMENT expression SEMI)+
-	|   (VAR variable ASSIGNMENT sequence SEMI)+
-	|   (VAR variable ASSIGNMENT map SEMI)+
-	|   (VAR variable ASSIGNMENT reduce SEMI)+
+	:	(VAR variable ASSIGNMENT expression (NEWLINE | EOF))+
+	|   (VAR variable ASSIGNMENT sequence (NEWLINE | EOF))+
+	|   (VAR variable ASSIGNMENT map (NEWLINE | EOF))+
+	|   (VAR variable ASSIGNMENT reduce (NEWLINE | EOF))+
 	|   print
 	|   out
 	;
@@ -57,4 +57,5 @@ VARIABLE        : ALPHA ( ALPHA )* ;
 NUMBER          :	('0' .. '9') + ('.' ('0' .. '9') +)? ;
 
 ALPHA           : [a-zA-Z_]+ ;
-WS              : [ \t\r\n]+ -> skip ;
+NEWLINE         : '\n' | '\r' '\n'? ;
+WS              : [\t ]+ -> skip ;

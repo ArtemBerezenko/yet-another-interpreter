@@ -16,7 +16,7 @@ internal class YaInterpreterSequenceTests {
 
     @Test
     fun createSequence() {
-        val sequence = YaInterpreter().evaluate("var a = {1, 5};")["a"]?.asSequence()
+        val sequence = YaInterpreter().evaluate("var a = {1, 5}")["a"]?.asSequence()
         val expected = listOf(1, 2, 3, 4, 5)
         assertEquals(expected, sequence)
     }
@@ -24,13 +24,13 @@ internal class YaInterpreterSequenceTests {
     @Test
     fun createSequenceInvalidInput() {
         assertThrows(SequenceEvaluatorException::class.java) {
-            YaInterpreter().evaluate("var a = {1.0, 5.0};")
+            YaInterpreter().evaluate("var a = {1.0, 5.0}")
         }
     }
 
     @Test
     fun mapFunctionTest() {
-        val sequence = YaInterpreter().evaluate("var a = map({0, 5}, i -> i * 2);")["a"]?.asSequence()
+        val sequence = YaInterpreter().evaluate("var a = map({0, 5}, i -> i * 2)")["a"]?.asSequence()
         val expected = listOf(0, 2, 4, 6, 8, 10)
         assertEquals(expected, sequence)
     }
@@ -38,7 +38,7 @@ internal class YaInterpreterSequenceTests {
 
     @Test
     fun reduceFunctionTest() {
-        val result = YaInterpreter().evaluate("var a = reduce({5, 7}, 1, x y -> x * y);")["a"]?.asInteger()
+        val result = YaInterpreter().evaluate("var a = reduce({5, 7}, 1, x y -> x * y)")["a"]?.asInteger()
         assertEquals(210, result)
     }
 }
